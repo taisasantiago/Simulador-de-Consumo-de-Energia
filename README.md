@@ -10,8 +10,7 @@ Este projeto é uma aplicação web desenvolvida com **Flask** que permite ao us
 - Jinja2 (template engine)
 - Bootstrap (opcional para estilização)
 
-## 📦 Instalação e Execução
-
-1. 👩‍💻 Autora
+##👩‍💻 Autora
 Desenvolvido por Taisa Santiago
 GitHub: https://github.com/taisasantiago
+
