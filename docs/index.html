@@ -3,36 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Calculadora de Consumo</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Simulador de Consumo de Energia</h1>
-        <form method="post">
+        <form id="formulario">
             <label>Quantidade de servidores:</label>
-            <input type="number" name="servidores" required>
+            <input type="number" id="servidores" required>
 
             <label>Custo por kWh (R$):</label>
-            <input type="number" step="0.01" name="custo_kwh" required>
+            <input type="number" step="0.01" id="custo_kwh" required>
 
             <label>Consumo mensal por servidor (kWh):</label>
-            <input type="number" step="0.01" name="consumo_mensal" required>
+            <input type="number" step="0.01" id="consumo_mensal" required>
 
             <label class="checkbox-label">
-                <input type="checkbox" name="usar_solar">
+                <input type="checkbox" id="usar_solar">
                 Usar energia solar?
             </label>
 
             <button type="submit">Calcular</button>
         </form>
 
-        {% if resultado %}
-        <div class="resultado">
-            <p><strong>Custo Total:</strong> {{ resultado }}</p>
-            <p><strong>Consumo Total:</strong> {{ consumo }} kWh</p>
-            <p><strong>Classificação:</strong> {{ classificacao }}</p>
+        <div class="resultado" id="resultado" style="display: none;">
+            <p><strong>Custo Total:</strong> <span id="custo_total"></span></p>
+            <p><strong>Consumo Total:</strong> <span id="consumo_total"></span> kWh</p>
+            <p><strong>Classificação:</strong> <span id="classificacao"></span></p>
         </div>
-        {% endif %}
     </div>
+
+    <script>
+        document.getElementById("formulario").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const servidores = parseInt(document.getElementById("servidores").value);
+            const custo_kwh = parseFloat(document.getElementById("custo_kwh").value);
+            const consumo_mensal = parseFloat(document.getElementById("consumo_mensal").value);
+            const usar_solar = document.getElementById("usar_solar").checked;
+
+            const consumo_total = servidores * consumo_mensal;
+            let custo_total = consumo_total * custo_kwh;
+
+            if (usar_solar) {
+                custo_total *= 0.6; // desconto de 40% com energia solar
+            }
+
+            let classificacao = "Alto";
+            if (consumo_total < 500) classificacao = "Baixo";
+            else if (consumo_total < 1500) classificacao = "Médio";
+
+            document.getElementById("custo_total").textContent = "R$ " + custo_total.toFixed(2);
+            document.getElementById("consumo_total").textContent = consumo_total.toFixed(2);
+            document.getElementById("classificacao").textContent = classificacao;
+            document.getElementById("resultado").style.display = "block";
+        });
+    </script>
 </body>
 </html>
