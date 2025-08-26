@@ -7,11 +7,10 @@ Este projeto é uma aplicação web desenvolvida com **Flask** que permite ao us
 - Python 3.11
 - Flask
 - HTML5 + CSS3
-- Jinja2 (template engine)
-- Bootstrap (opcional para estilização)
 
 Desenvolvido por Taisa Santiago
 GitHub: https://github.com/taisasantiago
+
 
 
 
